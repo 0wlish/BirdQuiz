@@ -1,0 +1,21 @@
+#i10 {
+    margin: 0px;
+}
+img {
+    width: 400px;
+    margin: 0px;
+    border-radius: 25px;
+}
+.questions {
+    margin-bottom: 20px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 25px;
+}
+
+#questions {
+    margin: 50px;
+    padding: 20px;
+    background-color: grey;
+    border-radius: 25px;
+}

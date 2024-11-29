@@ -1,4 +1,4 @@
-const images = [
+const allQuestions = [
     //region is either "EU" or "NA"
     //difficulty is "E", "M", "H"
     {url: "img_0.jpg", 
@@ -357,3 +357,29 @@ const images = [
         region: "NA", location: "Massachusetts, USA", difficulty: "E", 
         notes: "The White-winged Dove and the Eurasian Collared-dove can be eliminated based off of range. Although Rock Pigeons can have a wide range of plumage colors, they're usually very grey."},
 ];
+
+//71 bird questions
+
+const questions = []; //holds addresses of questions in allQuestions
+
+for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
+    let num = Math.floor(Math.random() * 71);
+    if (i == 0) {
+        questions[0] = num;
+    }
+    else {
+        while (questions.indexOf(num) != -1) { //do this while num already exists in question
+            num = Math.floor(Math.random() * 71);
+        }
+        questions[i] = num;
+    }
+    document.getElementById("i" + (i + 1)).src = "/images/" + allQuestions[questions[i]].url;
+    document.getElementById((i + 1) + "o1").innerHTML = allQuestions[questions[i]].o1;
+    document.getElementById((i + 1) + "o2").innerHTML = allQuestions[questions[i]].o2;
+    document.getElementById((i + 1) + "o3").innerHTML = allQuestions[questions[i]].o3;
+    document.getElementById((i + 1) + "o4").innerHTML = allQuestions[questions[i]].o4;
+}
+
+for (let q of questions) {
+    console.log(q);
+}
