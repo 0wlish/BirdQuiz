@@ -373,13 +373,30 @@ for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then gen
         }
         questions[i] = num;
     }
-    document.getElementById("i" + (i + 1)).src = "/images/" + allQuestions[questions[i]].url;
+    document.getElementById("i" + (i + 1)).src = "/server/images/" + allQuestions[questions[i]].url;
     document.getElementById((i + 1) + "o1").innerHTML = allQuestions[questions[i]].o1;
     document.getElementById((i + 1) + "o2").innerHTML = allQuestions[questions[i]].o2;
     document.getElementById((i + 1) + "o3").innerHTML = allQuestions[questions[i]].o3;
     document.getElementById((i + 1) + "o4").innerHTML = allQuestions[questions[i]].o4;
 }
 
+if(getCookie("q1") == "") //name new cookie if old one does not exist
+
 for (let q of questions) {
     console.log(q);
 }
+
+function getCookie(name) {
+    let n = name + "=";
+    const cArr = document.cookie.split(";");
+    for (let i = 0; i < cArr.length; i++) {
+        let c = cArr[i];
+        if (c.indexOf(n) != -1) {
+          return c.substring(n.length + c.indexOf(n), c.length);
+        }
+      }
+    return "";
+}
+function setCookie(name, value) {
+    document.cookie = name + "=" + value + ";" + "path=/;SameSite=None; Secure";
+  }
