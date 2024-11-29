@@ -1,3 +1,5 @@
+//ADD EUROPEAN STATES
+
 const allQuestions = [
     //region is either "EU" or "NA"
     //difficulty is "E", "M", "H"
@@ -361,29 +363,36 @@ const allQuestions = [
 //71 bird questions
 
 const questions = []; //holds addresses of questions in allQuestions
+const answers = []; //hold values of answers (a String equal to one of the options) for each question
 
-for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
-    let num = Math.floor(Math.random() * 71);
-    if (i == 0) {
-        questions[0] = num;
-    }
-    else {
-        while (questions.indexOf(num) != -1) { //do this while num already exists in question
-            num = Math.floor(Math.random() * 71);
+if (getCookie("q1") == "") { //if cookie has not been set
+    for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
+        let num = Math.floor(Math.random() * 71);
+        if (i == 0) {
+            questions[0] = num;
         }
-        questions[i] = num;
+        else {
+            while (questions.indexOf(num) != -1) { //do this while num already exists in question
+                num = Math.floor(Math.random() * 71);
+            }
+            questions[i] = num;
+        }
+        setCookie("q" + (i + 1), num);
     }
+}
+else {
+    for (let i = 0; i < 10; i++) {
+        questions[i] = getCookie("q" + (i + 1));
+    }
+}
+
+for (let i = 0; i < 10; i++) {
     document.getElementById("i" + (i + 1)).src = "/server/images/" + allQuestions[questions[i]].url;
+    document.getElementById("l" + (i + 1)).innerHTML = allQuestions[questions[i]].location;
     document.getElementById((i + 1) + "o1").innerHTML = allQuestions[questions[i]].o1;
     document.getElementById((i + 1) + "o2").innerHTML = allQuestions[questions[i]].o2;
     document.getElementById((i + 1) + "o3").innerHTML = allQuestions[questions[i]].o3;
     document.getElementById((i + 1) + "o4").innerHTML = allQuestions[questions[i]].o4;
-}
-
-if(getCookie("q1") == "") //name new cookie if old one does not exist
-
-for (let q of questions) {
-    console.log(q);
 }
 
 function getCookie(name) {
@@ -392,11 +401,34 @@ function getCookie(name) {
     for (let i = 0; i < cArr.length; i++) {
         let c = cArr[i];
         if (c.indexOf(n) != -1) {
-          return c.substring(n.length + c.indexOf(n), c.length);
+            return c.substring(n.length + c.indexOf(n), c.length);
         }
       }
     return "";
 }
 function setCookie(name, value) {
     document.cookie = name + "=" + value + ";" + "path=/;SameSite=None; Secure";
-  }
+}
+function deleteCookie(name) { //run when answers are submitted
+
+}
+function setAnswer(id) {
+    //recieves id of currently selected answer
+    let index = parseInt(id.substring(0,2)) - 1;
+    let option = id.substring(id.length - 2, id.length);
+    let answer = "";
+    if (option == "o1") {
+        answer = allQuestions[questions[index]].o1;
+    }
+    else if (option == "o2") {
+        answer = allQuestions[questions[index]].o2;
+    }
+    else if (option == "o3") {
+        answer = allQuestions[questions[index]].o3;
+    }
+    else if (option == "o4") {
+        answer = allQuestions[questions[index]].o4;
+    }
+    //document.getElementById(id).style.backgroundColor = "lightgrey";
+    answers[index] = answer
+}
