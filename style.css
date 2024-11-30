@@ -18,7 +18,7 @@ img {
     border-radius: 25px;
     width: 70%;
 }
-li:hover, #submit:hover {
+li:hover, #submit:hover, #newquiz:hover {
     background-color: lightgray;
 }
 li {
@@ -26,9 +26,13 @@ li {
     padding: 5px;
     border-radius: 10px;
 }
-#submit {
+#submit, #newquiz {
     width: fit-content;
     padding: 10px;
     border-radius: 10px;
     background-color: white;
+    margin: 10px;
+}
+#buttonbox {
+    display: flex;
 }

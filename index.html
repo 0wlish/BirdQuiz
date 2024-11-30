@@ -4,7 +4,7 @@
     <head>
         <link rel="stylesheet" href="style.css">
     </head>
-    <body>
+    <body onload="makeQuiz()">
         <h1>How well do you know birds?</h1>
         <p>you're here a bit early...come back later to actually play the quiz!</p>
 
@@ -139,7 +139,10 @@
                     <li id="10o4" onclick="setAnswer(this.id)"></li>
                 </ul>
             </div>
-            <h2 id="submit">submit answers</h2>
+            <div id="buttonbox">
+                <h2 id="submit" onclick="submitAnswers()">submit answers</h2>
+                <h2 id="newquiz" onclick="newQuiz()">new quiz</h2>
+            </div>
         </div>
         <script src="script.js"></script>
     </body>

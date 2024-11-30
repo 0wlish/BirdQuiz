@@ -350,7 +350,7 @@ const allQuestions = [
         notes: "We can eliminate the Southern House Wren and the Pacific Wren based off of range and the Carolina Wren based off of the lack of its characteristic white stripe above the eye."},
     {url: "img_69.jpg", 
         o1: "Eastern Kingbird", o2: "Eastern Phoebe", o3: "Eastern Wood-Pewee", o4: "Barn Swallow", 
-        answer: "Northern House Wren", 
+        answer: "Eastern Kingbird", 
         region: "NA", location: "Massachusetts, USA", difficulty: "E", 
         notes: "The Eastern Pheobe and the Eastern Wood-Pewee both lack the distinctive white stripe on the tip of the tail. The Barn Swallow has a V-shaped tail, not a rounded tail."},
     {url: "img_70.jpg", 
@@ -365,36 +365,37 @@ const allQuestions = [
 const questions = []; //holds addresses of questions in allQuestions
 const answers = []; //hold values of answers (a String equal to one of the options) for each question
 
-if (getCookie("q1") == "") { //if cookie has not been set
-    for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
-        let num = Math.floor(Math.random() * 71);
-        if (i == 0) {
-            questions[0] = num;
-        }
-        else {
-            while (questions.indexOf(num) != -1) { //do this while num already exists in question
-                num = Math.floor(Math.random() * 71);
+function makeQuiz() {
+    if (getCookie("q1") == "") { //if cookie has not been set
+        for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
+            let num = Math.floor(Math.random() * 71);
+            if (i == 0) {
+                questions[0] = num;
             }
-            questions[i] = num;
+            else {
+                while (questions.indexOf(num) != -1) { //do this while num already exists in question
+                    num = Math.floor(Math.random() * 71);
+                }
+                questions[i] = num;
+            }
+            setCookie("q" + (i + 1), num);
         }
-        setCookie("q" + (i + 1), num);
     }
-}
-else {
+    else {
+        for (let i = 0; i < 10; i++) {
+            questions[i] = getCookie("q" + (i + 1));
+        }
+    }
+
     for (let i = 0; i < 10; i++) {
-        questions[i] = getCookie("q" + (i + 1));
+        document.getElementById("i" + (i + 1)).src = "/server/images/" + allQuestions[questions[i]].url;
+        document.getElementById("l" + (i + 1)).innerHTML = allQuestions[questions[i]].location;
+        document.getElementById((i + 1) + "o1").innerHTML = allQuestions[questions[i]].o1;
+        document.getElementById((i + 1) + "o2").innerHTML = allQuestions[questions[i]].o2;
+        document.getElementById((i + 1) + "o3").innerHTML = allQuestions[questions[i]].o3;
+        document.getElementById((i + 1) + "o4").innerHTML = allQuestions[questions[i]].o4;
     }
 }
-
-for (let i = 0; i < 10; i++) {
-    document.getElementById("i" + (i + 1)).src = "/server/images/" + allQuestions[questions[i]].url;
-    document.getElementById("l" + (i + 1)).innerHTML = allQuestions[questions[i]].location;
-    document.getElementById((i + 1) + "o1").innerHTML = allQuestions[questions[i]].o1;
-    document.getElementById((i + 1) + "o2").innerHTML = allQuestions[questions[i]].o2;
-    document.getElementById((i + 1) + "o3").innerHTML = allQuestions[questions[i]].o3;
-    document.getElementById((i + 1) + "o4").innerHTML = allQuestions[questions[i]].o4;
-}
-
 function getCookie(name) {
     let n = name + "=";
     const cArr = document.cookie.split(";");
@@ -410,7 +411,13 @@ function setCookie(name, value) {
     document.cookie = name + "=" + value + ";" + "path=/;SameSite=None; Secure";
 }
 function deleteCookie(name) { //run when answers are submitted
-
+    document.cookie = name+"=; Max-Age=-99999999;SameSite=None; Secure";
+}
+function newQuiz() {
+    console.log(document.cookie);
+    deleteCookie("q1");
+    console.log(document.cookie);
+    makeQuiz();
 }
 function setAnswer(id) {
     //recieves id of currently selected answer
@@ -429,6 +436,29 @@ function setAnswer(id) {
     else if (option == "o4") {
         answer = allQuestions[questions[index]].o4;
     }
-    //document.getElementById(id).style.backgroundColor = "lightgrey";
+    clearStyles(index + 1);
+    document.getElementById(id).style.backgroundColor = "lightgrey";
     answers[index] = answer
+}
+function clearStyles (qNum) {
+    document.getElementById(qNum + "o1").style.backgroundColor = "";
+    document.getElementById(qNum + "o2").style.backgroundColor = "";
+    document.getElementById(qNum + "o3").style.backgroundColor = "";
+    document.getElementById(qNum + "o4").style.backgroundColor = "";
+}
+function submitAnswers() {
+    //checks if answers are correct
+    let score = 0;
+    for (let index in answers) {
+        console.log(answers[index]);
+        console.log(allQuestions[questions[index]].answer);
+        if (answers[index] ==  allQuestions[questions[index]].answer) {
+            score++;
+        }
+        else {
+
+        }
+    }
+    console.log(score);
+    //make play again? button appear (or only make new quiz button appear after submission)
 }
