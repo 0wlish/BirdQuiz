@@ -412,9 +412,12 @@ function deleteCookie(name) { //run when answers are submitted
     document.cookie = name+"=; Max-Age=-99999999;SameSite=None; Secure";
 }
 function newQuiz() {
-    console.log(document.cookie);
     deleteCookie("q1");
-    console.log(document.cookie);
+    for (let i = 1; i <= 10; i++) {
+        clearStyles(i);
+    }
+    clearAnswerNotes();
+    clearScore();
     makeQuiz();
 }
 function setAnswer(id) {
@@ -444,19 +447,42 @@ function clearStyles (qNum) {
     document.getElementById(qNum + "o3").style.backgroundColor = "";
     document.getElementById(qNum + "o4").style.backgroundColor = "";
 }
+function clearAnswerNotes() { //clears all answer notes and results
+    for (let i = 1; i <= 10; i++) {
+        document.getElementById("res" + i).parentElement.style.display = "none"; //clear correct/incorrect
+        document.getElementById("ans" + i).style.display = "none"; //clear answerbox
+    }
+    document.getElementById("score-container").style.display = "none";
+}
+function clearScore() { //clears score
+
+}
 function submitAnswers() {
     //checks if answers are correct
     let score = 0;
     for (let index in answers) {
-        console.log(answers[index]);
-        console.log(allQuestions[questions[index]].answer);
-        if (answers[index] ==  allQuestions[questions[index]].answer) {
+        document.getElementById("ans" + (parseInt(index) + 1)).style.display = "block";
+        
+        //console.log(index);
+        //console.log(answers[index]);
+        document.getElementById("a" + (parseInt(index) + 1)).innerHTML = allQuestions[questions[index]].answer;
+        document.getElementById("r" + (parseInt(index) + 1)).style.display = "block";
+        document.getElementById("n" + (parseInt(index) + 1)).innerHTML = allQuestions[questions[index]].notes;
+        document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.display = "block";
+
+        if (answers[index] ==  allQuestions[questions[index]].answer) { //if answer is correct
+            document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "correct!";
+            document.getElementById("res" + (parseInt(index) + 1)).style.color = "green";
+            document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightgreen";
             score++;
         }
-        else {
-
+        else { //if answer is not correct
+            document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "incorrect :(";
+            document.getElementById("res" + (parseInt(index) + 1)).style.color = "red";
+            document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightpink";
         }
     }
-    console.log(score);
+    document.getElementById("score-container").style.display = "block";
+    document.getElementById("score").innerHTML = score + "/10";
     //make play again? button appear (or only make new quiz button appear after submission)
 }

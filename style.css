@@ -11,8 +11,8 @@ img {
     border-radius: 25px;
 }
 
-#question-container {
-    margin: auto;
+#question-container, #score-container {
+    margin: auto auto 20px auto;
     padding: 20px;
     background-color: grey;
     border-radius: 25px;
@@ -35,4 +35,32 @@ li {
 }
 #buttonbox {
     display: flex;
+}
+#scorebox {
+    background-color: white;
+    margin: auto;
+    padding: 30px;
+    border-radius: 25px;
+}
+#score-container {
+    display: none;
+}
+.answers {
+    display: none;
+    background-color: lightgrey;
+    padding: 20px;
+    border-radius: 25px;
+}
+.notes {
+    display: none;
+}
+h3, h2 {
+    margin: 0px;
+}
+.question-header {
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
+    margin: 20px 0px;
+    display: none;
 }
