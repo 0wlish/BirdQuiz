@@ -114,15 +114,15 @@ function submitAnswers() {
                 document.getElementById("res" + (parseInt(index) + 1)).style.color = "red";
                 document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightpink";
             }
+            if (index == 9) { //if for loops is nearly done
+                document.getElementById("score-container").style.display = "block";
+                document.getElementById("score").innerHTML = score + "/10";
+            }
         }
         xmlhttp.open("GET", "/server/answers/" + questions[index] + ".json");
         xmlhttp.send();
-        console.log("sent");
     }
     //ERROR: this happens before score has been tallied, because xhlhttp is asynchronous. need to fix that somehow
-    console.log("done");
-    document.getElementById("score-container").style.display = "block";
-    document.getElementById("score").innerHTML = score + "/10";
-    console.log("final score: " + score);
+    
     //make play again? button appear (or only make new quiz button appear after submission)
 }
