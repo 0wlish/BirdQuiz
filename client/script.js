@@ -1,3 +1,9 @@
+//TODO:
+//shuffle options for answers
+//lightbox for images
+//figure out why cookie is a bit screwy
+//do something to figure out how to make server directory hidden on Pages website
+
 const questions = []; //holds addresses of questions in json file
 const answers = []; //hold values of answers (a String equal to one of the options) for each question
 
@@ -87,41 +93,53 @@ function clearAnswerNotes() { //clears all answer notes and results
 function submitAnswers() {
     //checks if answers are correct
     let score = 0;
-    for (let index in answers) {
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.onload = function() {
-            const q = JSON.parse(this.responseText);
-            document.getElementById("ans" + (parseInt(index) + 1)).style.display = "block";
-            
-            //console.log(index);
-            //console.log(answers[index]);
-            document.getElementById("a" + (parseInt(index) + 1)).innerHTML = q.answer;
-            document.getElementById("r" + (parseInt(index) + 1)).style.display = "block";
-            document.getElementById("n" + (parseInt(index) + 1)).innerHTML = q.notes;
-            document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.display = "block";
-            console.log(answers[index]);
-            console.log(q.answer);
-            if (answers[index] ==  q.answer) { //if answer is correct
-                console.log("Correct");
-                document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "correct!";
-                document.getElementById("res" + (parseInt(index) + 1)).style.color = "green";
-                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightgreen";
-                score++;
-                console.log(score);
-            }
-            else { //if answer is not correct
-                document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "incorrect :(";
-                document.getElementById("res" + (parseInt(index) + 1)).style.color = "red";
-                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightpink";
-            }
-            if (index == 9) { //if for loops is nearly done
-                document.getElementById("score-container").style.display = "block";
-                document.getElementById("score").innerHTML = score + "/10";
-            }
+
+    tallyAnswer().then(
+        function() { //not working
+            console.log("here");
+            document.getElementById("score-container").style.display = "block";
+            document.getElementById("score").innerHTML = score + "/10";
         }
-        xmlhttp.open("GET", "/server/answers/" + questions[index] + ".json");
-        xmlhttp.send();
+    );
+
+    async function tallyAnswer() { //returns score once answers have been tallied
+        for (let index in answers) {
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function() {
+                const q = JSON.parse(this.responseText);
+                document.getElementById("ans" + (parseInt(index) + 1)).style.display = "block";
+                
+                //console.log(index);
+                //console.log(answers[index]);
+                document.getElementById("a" + (parseInt(index) + 1)).innerHTML = q.answer;
+                document.getElementById("r" + (parseInt(index) + 1)).style.display = "block";
+                document.getElementById("n" + (parseInt(index) + 1)).innerHTML = q.notes;
+                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.display = "block";
+                console.log(answers[index]);
+                console.log(q.answer);
+                if (answers[index] ==  q.answer) { //if answer is correct
+                    //console.log("Correct");
+                    document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "correct!";
+                    document.getElementById("res" + (parseInt(index) + 1)).style.color = "green";
+                    document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightgreen";
+                    score++;
+                    console.log(score);
+                }
+                else { //if answer is not correct
+                    document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "incorrect :(";
+                    document.getElementById("res" + (parseInt(index) + 1)).style.color = "red";
+                    document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightpink";
+                }
+                
+            }
+            xmlhttp.open("GET", "/server/answers/" + questions[index] + ".json");
+            xmlhttp.send();
+        }
+        console.log("score is " + score);
+        return score;
     }
+    
+
     //ERROR: this happens before score has been tallied, because xhlhttp is asynchronous. need to fix that somehow
     
     //make play again? button appear (or only make new quiz button appear after submission)
