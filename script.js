@@ -33,14 +33,14 @@ function makeQuiz() {
         const xmlhttp = new XMLHttpRequest();
         xmlhttp.onload = function() {
             const q = JSON.parse(this.responseText);
-            document.getElementById("i" + (i + 1)).src = "/server/images/" + q.url;
+            document.getElementById("i" + (i + 1)).src = "https://owlish.hackclub.app/BirdQuiz/server/images/" + q.url;
             document.getElementById("l" + (i + 1)).innerHTML = q.location;
             document.getElementById((i + 1) + "o1").innerHTML = q.o1;
             document.getElementById((i + 1) + "o2").innerHTML = q.o2;
             document.getElementById((i + 1) + "o3").innerHTML = q.o3;
             document.getElementById((i + 1) + "o4").innerHTML = q.o4;
         }
-        xmlhttp.open("GET", "/server/questions/" + questions[i] + ".json");
+        xmlhttp.open("GET", "https://owlish.hackclub.app/BirdQuiz/server/questions/" + questions[i] + ".json");
         xmlhttp.send();  
     }
 }
@@ -132,7 +132,7 @@ function submitAnswers() {
                 }
                 
             }
-            xmlhttp.open("GET", "/server/answers/" + questions[index] + ".json");
+            xmlhttp.open("GET", "https://owlish.hackclub.app/BirdQuiz/server/answers/" + questions[index] + ".json");
             xmlhttp.send();
         }
         console.log("score is " + score);
