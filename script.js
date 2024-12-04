@@ -41,6 +41,8 @@ function makeQuiz() {
             document.getElementById((i + 1) + "o4").innerHTML = q.o4;
         }
         xmlhttp.open("GET", "https://owlish.hackclub.app/BirdQuiz/server/questions/" + questions[i] + ".json");
+        xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xmlhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
         xmlhttp.send();  
     }
 }
@@ -133,6 +135,7 @@ function submitAnswers() {
                 
             }
             xmlhttp.open("GET", "https://owlish.hackclub.app/BirdQuiz/server/answers/" + questions[index] + ".json");
+            xmlhttp.setRequestHeader();
             xmlhttp.send();
         }
         console.log("score is " + score);
