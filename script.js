@@ -63,7 +63,9 @@ function setCookie(name, value) {
     document.cookie = name + "=" + value + ";" + "path=/;SameSite=None; Secure";
 }
 function deleteCookie(name) { //run when answers are submitted
-    document.cookie = name+"=; Max-Age=-99999999;SameSite=None; Secure";
+    console.log("before deletion: " + document.cookie);
+    document.cookie = name+"=; max-age=-1;SameSite=None; Secure";
+    console.log("after deletion: " + document.cookie);
 }
 function newQuiz() {
     console.log("generating new quiz");
