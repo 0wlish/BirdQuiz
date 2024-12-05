@@ -9,6 +9,7 @@ const answers = []; //hold values of answers (a String equal to one of the optio
 
 function makeQuiz() {
     if (getCookie("q1") == "") { //if cookie has not been set
+        console.log("cookie deleted");
         for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
             let num = Math.floor(Math.random() * 71);
             if (i == 0) {
@@ -65,8 +66,8 @@ function deleteCookie(name) { //run when answers are submitted
 }
 function newQuiz() {
     console.log("generating new quiz");
-    deleteCookie("q1");
     for (let i = 1; i <= 10; i++) {
+        deleteCookie("q" + i);
         clearStyles(i);
     }
     clearAnswerNotes();
