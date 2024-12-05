@@ -60,11 +60,11 @@ function getCookie(name) {
     return "";
 }
 function setCookie(name, value) {
-    document.cookie = name + "=" + value + ";" + "path=/;SameSite=None; Secure";
+    document.cookie = name + "=" + value + ";max-age=86400;path=/;SameSite=None; Secure";
 }
 function deleteCookie(name) { //run when answers are submitted
     console.log("before deletion: " + document.cookie);
-    document.cookie = name+"=; max-age=-1;SameSite=None; Secure";
+    document.cookie = name+"=;max-age=-1;SameSite=None; Secure";
     console.log("after deletion: " + document.cookie);
 }
 function newQuiz() {
