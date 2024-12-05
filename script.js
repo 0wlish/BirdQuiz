@@ -135,7 +135,6 @@ function submitAnswers() {
                 
             }
             xmlhttp.open("GET", "https://owlish.hackclub.app/BirdQuiz/server/answers/" + questions[index] + ".json");
-            xmlhttp.setRequestHeader();
             xmlhttp.send();
         }
         console.log("score is " + score);
