@@ -8,6 +8,7 @@ const questions = []; //holds addresses of questions in json file
 const answers = []; //hold values of answers (a String equal to one of the options) for each question
 
 function makeQuiz() {
+    console.log("making quiz");
     if (getCookie("q1") == "") { //if cookie has not been set
         console.log("cookie deleted");
         for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
