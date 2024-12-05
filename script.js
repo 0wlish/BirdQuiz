@@ -64,6 +64,7 @@ function deleteCookie(name) { //run when answers are submitted
     document.cookie = name+"=; Max-Age=-99999999;SameSite=None; Secure";
 }
 function newQuiz() {
+    console.log("generating new quiz");
     deleteCookie("q1");
     for (let i = 1; i <= 10; i++) {
         clearStyles(i);
