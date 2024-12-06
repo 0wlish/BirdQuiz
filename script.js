@@ -1,16 +1,19 @@
 //TODO:
 //shuffle options for answers
-//lightbox for images
+//lightbox for images (click to zoom in on images)
 //figure out why cookie is a bit screwy
 //do something to figure out how to make server directory hidden on Pages website
+//make it more obvious when something is clicked
+//make score more obvious (in header?)
+//prevent changing answer after submission
+//put answer right after image??
+//highlight answer in green?
 
 const questions = []; //holds addresses of questions in json file
 const answers = []; //hold values of answers (a String equal to one of the options) for each question
 
 function makeQuiz() {
-    console.log("making quiz");
     if (getCookie("q1") == "") { //if cookie has not been set
-        console.log("cookie deleted");
         for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
             let num = Math.floor(Math.random() * 71);
             if (i == 0) {
@@ -32,20 +35,20 @@ function makeQuiz() {
     }
 
     for (let i = 0; i < 10; i++) {
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.onload = function() {
-            const q = JSON.parse(this.responseText);
-            document.getElementById("i" + (i + 1)).src = "https://owlish.hackclub.app/BirdQuiz/server/images/" + q.url;
-            document.getElementById("l" + (i + 1)).innerHTML = q.location;
-            document.getElementById((i + 1) + "o1").innerHTML = q.o1;
-            document.getElementById((i + 1) + "o2").innerHTML = q.o2;
-            document.getElementById((i + 1) + "o3").innerHTML = q.o3;
-            document.getElementById((i + 1) + "o4").innerHTML = q.o4;
-        }
-        xmlhttp.open("GET", "https://owlish.hackclub.app/BirdQuiz/server/questions/" + questions[i] + ".json");
-        xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-        xmlhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
-        xmlhttp.send();  
+        fetch("https://owlish.hackclub.app/BirdQuiz/server/questions/" + questions[i] + ".json")
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();})
+        .then((data) => {
+            document.getElementById("i" + (i + 1)).src = "https://owlish.hackclub.app/BirdQuiz/server/images/" + data.url;
+            document.getElementById("l" + (i + 1)).innerHTML = data.location;
+            document.getElementById((i + 1) + "o1").innerHTML = data.o1;
+            document.getElementById((i + 1) + "o2").innerHTML = data.o2;
+            document.getElementById((i + 1) + "o3").innerHTML = data.o3;
+            document.getElementById((i + 1) + "o4").innerHTML = data.o4;})
+        .catch((error) => console.error("Unable to fetch data:", error));
     }
 }
 function getCookie(name) {
@@ -63,12 +66,12 @@ function setCookie(name, value) {
     document.cookie = name + "=" + value + ";max-age=86400;path=/BirdQuiz/;SameSite=None; Secure";
 }
 function deleteCookie(name) { //run when answers are submitted
-    console.log("before deletion: " + document.cookie);
+    //console.log("before deletion: " + document.cookie);
     document.cookie = name+"=;max-age=-1;path=/BirdQuiz/;SameSite=None; Secure";
-    console.log("after deletion: " + document.cookie);
+    //console.log("after deletion: " + document.cookie);
 }
 function newQuiz() {
-    console.log("generating new quiz");
+    //console.log("generating new quiz");
     for (let i = 1; i <= 10; i++) {
         deleteCookie("q" + i);
         clearStyles(i);
@@ -81,7 +84,7 @@ function setAnswer(id) {
     let index = parseInt(id.substring(0,2)) - 1;
     let answer = document.getElementById(id).innerHTML;
     clearStyles(index + 1);
-    document.getElementById(id).style.backgroundColor = "lightgrey";
+    document.getElementById(id).style.backgroundColor = "darkgrey";
     answers[index] = answer
 }
 function clearStyles (qNum) {
@@ -101,52 +104,41 @@ function submitAnswers() {
     //checks if answers are correct
     let score = 0;
 
-    tallyAnswer().then(
-        function() { //not working
-            console.log("here");
+    for (let index in answers) {
+        //somehow disable choosing a new answer
+
+        fetch("https://owlish.hackclub.app/BirdQuiz/server/answers/" + questions[index] + ".json")
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();})
+        .then((data) => {
+            document.getElementById("ans" + (parseInt(index) + 1)).style.display = "block";
+            document.getElementById("a" + (parseInt(index) + 1)).innerHTML = data.answer;
+            document.getElementById("r" + (parseInt(index) + 1)).style.display = "block";
+            document.getElementById("n" + (parseInt(index) + 1)).innerHTML = data.notes;
+            document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.display = "block";
+            console.log(answers[index]);
+            console.log(data.answer);
+            if (answers[index] ==  data.answer) { //if answer is correct
+                document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "correct!";
+                document.getElementById("res" + (parseInt(index) + 1)).style.color = "green";
+                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightgreen";
+                score++;
+                console.log(score);
+            }
+            else { //if answer is not correct
+                document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "incorrect :(";
+                document.getElementById("res" + (parseInt(index) + 1)).style.color = "red";
+                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightpink";
+            }
             document.getElementById("score-container").style.display = "block";
             document.getElementById("score").innerHTML = score + "/10";
-        }
-    );
-
-    async function tallyAnswer() { //returns score once answers have been tallied
-        for (let index in answers) {
-            const xmlhttp = new XMLHttpRequest();
-            xmlhttp.onload = function() {
-                const q = JSON.parse(this.responseText);
-                document.getElementById("ans" + (parseInt(index) + 1)).style.display = "block";
-                
-                //console.log(index);
-                //console.log(answers[index]);
-                document.getElementById("a" + (parseInt(index) + 1)).innerHTML = q.answer;
-                document.getElementById("r" + (parseInt(index) + 1)).style.display = "block";
-                document.getElementById("n" + (parseInt(index) + 1)).innerHTML = q.notes;
-                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.display = "block";
-                console.log(answers[index]);
-                console.log(q.answer);
-                if (answers[index] ==  q.answer) { //if answer is correct
-                    //console.log("Correct");
-                    document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "correct!";
-                    document.getElementById("res" + (parseInt(index) + 1)).style.color = "green";
-                    document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightgreen";
-                    score++;
-                    console.log(score);
-                }
-                else { //if answer is not correct
-                    document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "incorrect :(";
-                    document.getElementById("res" + (parseInt(index) + 1)).style.color = "red";
-                    document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightpink";
-                }
-                
-            }
-            xmlhttp.open("GET", "https://owlish.hackclub.app/BirdQuiz/server/answers/" + questions[index] + ".json");
-            xmlhttp.send();
-        }
-        console.log("score is " + score);
-        return score;
+        })
+        .catch((error) => console.error("Unable to fetch data:", error));
     }
-    
-
+    console.log("score is " + score);
     //ERROR: this happens before score has been tallied, because xhlhttp is asynchronous. need to fix that somehow
     
     //make play again? button appear (or only make new quiz button appear after submission)
