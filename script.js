@@ -20,6 +20,7 @@ setRegion("al"); //set region to all birds (default)
 
 function makeQuiz() {
     if (getCookie("q1") == "") { //if cookie has not been set
+        resetQuestionArray();
         if (region != "al") { //if data needs to be fetched from server
             fetch("https://owlish.hackclub.app/BirdQuiz/server/" + region + ".json")
             .then((res) => {
@@ -28,7 +29,6 @@ function makeQuiz() {
                 }
                 return res.json();})
             .then((data) => {
-                console.log(data.birds);
                 for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
                     let num = 0;
                     if (region == "na") {
@@ -37,30 +37,23 @@ function makeQuiz() {
                     else if (region == "eu") {
                         num = Math.floor(Math.random() * NUM_EU);
                     }
-                    console.log("first gen num is " + num);
                     if (i == 0) {
-                        questions[0] = num;
+                        questions[0] = parseInt(data.birds[num]);
                     }
                     else {
-                        console.log(questions.indexOf(num));
-                        while (questions.indexOf(num) != -1) { //do this while num already exists in question
-                            console.log("num repeated " + num);
+                        while (questions.indexOf(parseInt(data.birds[num])) != -1) { //do this while num already exists in question
                             if (region == "na") {
                                 num = Math.floor(Math.random() * NUM_NA);
-                
                             }
                             else if (region == "eu") {
                                 num = Math.floor(Math.random() * NUM_EU);
                             }
                         }
-                        questions[i] = num;
+                        questions[i] = parseInt(data.birds[num]);
                     }
-                    console.log("initial index: " + questions[i]);
-                    questions[i] = data.birds[questions[i]];
                     setCookie("q" + (i + 1), num);
-
                     //update webpage
-                    setQuiz(i);          
+                    setQuiz(i);
                 }
             })
             .catch((error) => console.error("Unable to fetch data:", error)); //fetch is working
@@ -209,4 +202,9 @@ function setRegion(id) { //receives id of region and updates region variable as 
     document.getElementById("eu").style.backgroundColor = "";
     document.getElementById(id).style.backgroundColor = "darkgrey";
     newQuiz();
+}
+function resetQuestionArray() {
+    for (let q in questions) {
+        questions[q] = -1;
+    }
 }
