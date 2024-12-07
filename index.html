@@ -17,9 +17,9 @@
             <div id="q1" class="questions">
                 <h2>#1</h2>
                 <div class="question-header">
-                    <h2 id="res1">test</h2>
+                    <h2 id="res1"></h2>
                 </div>
-                <img src="" id="i1">
+                <img src="" id="i1" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l1"></p>
                 <h3>This bird is a...</h3>
@@ -43,7 +43,7 @@
                 <div class="question-header">
                     <h2 id="res2"></h2>
                 </div>
-                <img src="" id="i2">
+                <img src="" id="i2" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l2"></p>
                 <h3>This bird is a...</h3>
@@ -67,7 +67,7 @@
                 <div class="question-header">
                     <h2 id="res3"></h2>
                 </div>
-                <img src="" id="i3">
+                <img src="" id="i3" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l3"></p>
                 <h3>This bird is a...</h3>
@@ -91,7 +91,7 @@
                 <div  class="question-header">
                     <h2 id="res4"></h2>
                 </div>
-                <img src="" id="i4">
+                <img src="" id="i4" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l4"></p>
                 <h3>This bird is a...</h3>
@@ -115,7 +115,7 @@
                 <div class="question-header">
                     <h2 id="res5"></h2>
                 </div>
-                <img src="" id="i5">
+                <img src="" id="i5" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l5"></p>
                 <h3>This bird is a...</h3>
@@ -139,7 +139,7 @@
                 <div class="question-header">
                     <h2 id="res6"></h2>
                 </div>
-                <img src="" id="i6">
+                <img src="" id="i6" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l6"></p>
                 <h3>This bird is a...</h3>
@@ -163,7 +163,7 @@
                 <div class="question-header">
                     <h2 id="res7"></h2>
                 </div>
-                <img src="" id="i7">
+                <img src="" id="i7" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l7"></p>
                 <h3>This bird is a...</h3>
@@ -187,7 +187,7 @@
                 <div class="question-header">
                     <h2 id="res8"></h2>
                 </div>
-                <img src="" id="i8">
+                <img src="" id="i8" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l8"></p>
                 <h3>This bird is a...</h3>
@@ -211,7 +211,7 @@
                 <div class="question-header">
                     <h2 id="res9"></h2>
                 </div>
-                <img src="" id="i9">
+                <img src="" id="i9" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l9"></p>
                 <h3>This bird is a...</h3>
@@ -235,7 +235,7 @@
                 <div class="question-header">
                     <h2 id="res10"></h2>
                 </div>
-                <img src="" id="i10">
+                <img src="" id="i10" onclick="openModal(this.id)">
                 <h3>Location:</h3>
                 <p id="l10"></p>
                 <h3>This bird is a...</h3>
@@ -264,6 +264,10 @@
                 <h2>your score:</h2>
                 <h3 id="score"></h3>
             </div>
+        </div>
+        <div id="modal">
+            <span id="closeModal" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="">
         </div>
         <script src="script.js"></script>
     </body>

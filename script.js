@@ -1,11 +1,9 @@
 //TODO:
 //shuffle options for answers
-//lightbox for images (click to zoom in on images)
 //make score more obvious (in header?)
 //prevent changing answer after submission
 //put answer right after image??
 //highlight answer in green?
-//regional options
 //nicer colors
 
 const questions = []; //holds addresses of questions in json file
@@ -188,10 +186,7 @@ function submitAnswers() {
             document.getElementById("score").innerHTML = score + "/10";
         })
         .catch((error) => console.error("Unable to fetch data:", error));
-    }
-    console.log("score is " + score);
-    //ERROR: this happens before score has been tallied, because xhlhttp is asynchronous. need to fix that somehow
-    
+    }    
     //make play again? button appear (or only make new quiz button appear after submission)
 }
 function setRegion(id) { //receives id of region and updates region variable as well as html and styles
@@ -207,4 +202,12 @@ function resetQuestionArray() {
     for (let q in questions) {
         questions[q] = -1;
     }
+}
+function openModal(id) {
+    const img = document.getElementById(id);
+    document.getElementById("modal").style.display = "block";
+    document.getElementById("modalImage").src = img.src;
+}
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
 }
