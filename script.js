@@ -12,19 +12,58 @@ const questions = []; //holds addresses of questions in json file
 const answers = []; //hold values of answers (a String equal to one of the options) for each question
 let region = "AL"; //holds region for birds, default is all
 
+const NUM_EU = 24; //number of questions in each region
+const NUM_NA = 47;
+
+setRegion("al"); //set region to all birds (default)
+
 function makeQuiz() {
     if (getCookie("q1") == "") { //if cookie has not been set
-        setRegion("AL"); //set region to all birds (default)
+        let questionTranslate;
+
+        if (region != "al") {
+            questionTranslate = fetch("https://owlish.hackclub.app/BirdQuiz/server/" + region + ".json")
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                return res.json();})
+            .then((data) => {return data})
+            .catch((error) => console.error("Unable to fetch data:", error)); //fetch is working
+        }
+        //need to somehow run for loop after fetch finishes
         for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
-            let num = Math.floor(Math.random() * 71);
+            let num = 0;
+            if (region == "na") {
+                num = Math.floor(Math.random() * NUM_NA);
+            }
+            else if (region == "eu") {
+                num = Math.floor(Math.random() * NUM_EU);
+            }
+            else {
+                num = Math.floor(Math.random() * 71);
+            }
+
             if (i == 0) {
                 questions[0] = num;
             }
             else {
                 while (questions.indexOf(num) != -1) { //do this while num already exists in question
-                    num = Math.floor(Math.random() * 71);
+                    if (region == "na") {
+                        num = Math.floor(Math.random() * NUM_NA);
+        
+                    }
+                    else if (region == "eu") {
+                        num = Math.floor(Math.random() * NUM_EU);
+                    }
+                    else {
+                        num = Math.floor(Math.random() * 71);
+                    }
                 }
                 questions[i] = num;
+            }
+            if (region != "al") { //translate indexes into question indexes
+
             }
             setCookie("q" + (i + 1), num);
         }
@@ -146,8 +185,9 @@ function submitAnswers() {
 function setRegion(id) { //receives id of region and updates region variable as well as html and styles
     //should only run if answers are not submitted
     region = id;
-    document.getElementById("AL").style.backgroundColor = ""; //clear styles
-    document.getElementById("NA").style.backgroundColor = "";
-    document.getElementById("EU").style.backgroundColor = "";
+    document.getElementById("al").style.backgroundColor = ""; //clear styles
+    document.getElementById("na").style.backgroundColor = "";
+    document.getElementById("eu").style.backgroundColor = "";
     document.getElementById(id).style.backgroundColor = "darkgrey";
+    newQuiz();
 }

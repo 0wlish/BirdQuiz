@@ -18,7 +18,7 @@ img {
     border-radius: 25px;
     width: 70%;
 }
-li:hover, #submit:hover, #newquiz:hover, #AL:hover, #NA:hover, #EU:hover {
+li:hover, #submit:hover, #newquiz:hover, #al:hover, #na:hover, #eu:hover {
     background-color: lightgray;
 }
 li {
@@ -26,7 +26,7 @@ li {
     padding: 5px;
     border-radius: 10px;
 }
-#submit, #newquiz, #AL, #NA, #EU {
+#submit, #newquiz, #al, #na, #eu {
     width: fit-content;
     padding: 10px;
     border-radius: 10px;
