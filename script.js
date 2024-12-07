@@ -14,66 +14,83 @@ let region = "AL"; //holds region for birds, default is all
 
 const NUM_EU = 24; //number of questions in each region
 const NUM_NA = 47;
+const NUM_AL = 71; //number of questions overall
 
 setRegion("al"); //set region to all birds (default)
 
 function makeQuiz() {
     if (getCookie("q1") == "") { //if cookie has not been set
-        let questionTranslate;
-
-        if (region != "al") {
-            questionTranslate = fetch("https://owlish.hackclub.app/BirdQuiz/server/" + region + ".json")
+        if (region != "al") { //if data needs to be fetched from server
+            fetch("https://owlish.hackclub.app/BirdQuiz/server/" + region + ".json")
             .then((res) => {
                 if (!res.ok) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
                 return res.json();})
-            .then((data) => {return data})
-            .catch((error) => console.error("Unable to fetch data:", error)); //fetch is working
-        }
-        //need to somehow run for loop after fetch finishes
-        for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
-            let num = 0;
-            if (region == "na") {
-                num = Math.floor(Math.random() * NUM_NA);
-            }
-            else if (region == "eu") {
-                num = Math.floor(Math.random() * NUM_EU);
-            }
-            else {
-                num = Math.floor(Math.random() * 71);
-            }
-
-            if (i == 0) {
-                questions[0] = num;
-            }
-            else {
-                while (questions.indexOf(num) != -1) { //do this while num already exists in question
+            .then((data) => {
+                console.log(data.birds);
+                for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
+                    let num = 0;
                     if (region == "na") {
                         num = Math.floor(Math.random() * NUM_NA);
-        
                     }
                     else if (region == "eu") {
                         num = Math.floor(Math.random() * NUM_EU);
                     }
-                    else {
-                        num = Math.floor(Math.random() * 71);
+                    console.log("first gen num is " + num);
+                    if (i == 0) {
+                        questions[0] = num;
                     }
-                }
-                questions[i] = num;
-            }
-            if (region != "al") { //translate indexes into question indexes
+                    else {
+                        console.log(questions.indexOf(num));
+                        while (questions.indexOf(num) != -1) { //do this while num already exists in question
+                            console.log("num repeated " + num);
+                            if (region == "na") {
+                                num = Math.floor(Math.random() * NUM_NA);
+                
+                            }
+                            else if (region == "eu") {
+                                num = Math.floor(Math.random() * NUM_EU);
+                            }
+                        }
+                        questions[i] = num;
+                    }
+                    console.log("initial index: " + questions[i]);
+                    questions[i] = data.birds[questions[i]];
+                    setCookie("q" + (i + 1), num);
 
+                    //update webpage
+                    setQuiz(i);          
+                }
+            })
+            .catch((error) => console.error("Unable to fetch data:", error)); //fetch is working
+        }
+        else { //if region == al
+            for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
+                let num = Math.floor(Math.random() * NUM_NA);
+                
+                if (i == 0) {
+                    questions[0] = num;
+                }
+                else {
+                    while (questions.indexOf(num) != -1) { //do this while num already exists in question
+                        num = Math.floor(Math.random() * NUM_AL);
+                    }
+                    questions[i] = num;
+                }
+                setCookie("q" + (i + 1), num);
+                setQuiz(i);
             }
-            setCookie("q" + (i + 1), num);
         }
     }
     else {
         for (let i = 0; i < 10; i++) {
             questions[i] = getCookie("q" + (i + 1));
+            setQuiz(i);
         }
     }
-    for (let i = 0; i < 10; i++) {
+
+    function setQuiz(i) {
         fetch("https://owlish.hackclub.app/BirdQuiz/server/questions/" + questions[i] + ".json")
         .then((res) => {
             if (!res.ok) {
@@ -83,6 +100,8 @@ function makeQuiz() {
         .then((data) => {
             document.getElementById("i" + (i + 1)).src = "https://owlish.hackclub.app/BirdQuiz/server/images/" + data.url;
             document.getElementById("l" + (i + 1)).innerHTML = data.location;
+            //console.log("loc: " + data.location);
+            //console.log("index: " + questions[i]);
             document.getElementById((i + 1) + "o1").innerHTML = data.o1;
             document.getElementById((i + 1) + "o2").innerHTML = data.o2;
             document.getElementById((i + 1) + "o3").innerHTML = data.o3;
