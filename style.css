@@ -13,12 +13,12 @@ img {
 
 #question-container, #score-container {
     margin: auto auto 20px auto;
-    padding: 20px;
+    padding: 20px 20px 0px 20px;
     background-color: grey;
     border-radius: 25px;
     width: 70%;
 }
-li:hover, #submit:hover, #newquiz:hover {
+li:hover, #submit:hover, #newquiz:hover, #AL:hover, #NA:hover, #EU:hover {
     background-color: lightgray;
 }
 li {
@@ -26,14 +26,15 @@ li {
     padding: 5px;
     border-radius: 10px;
 }
-#submit, #newquiz {
+#submit, #newquiz, #AL, #NA, #EU {
     width: fit-content;
     padding: 10px;
     border-radius: 10px;
     background-color: white;
-    margin: 10px;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
-#buttonbox {
+#buttonbox, #buttonbox2 {
     display: flex;
 }
 #scorebox {
@@ -44,6 +45,7 @@ li {
 }
 #score-container {
     display: none;
+    padding: 20px;
 }
 .answers {
     display: none;

@@ -1,19 +1,20 @@
 //TODO:
 //shuffle options for answers
 //lightbox for images (click to zoom in on images)
-//figure out why cookie is a bit screwy
-//do something to figure out how to make server directory hidden on Pages website
-//make it more obvious when something is clicked
 //make score more obvious (in header?)
 //prevent changing answer after submission
 //put answer right after image??
 //highlight answer in green?
+//regional options
+//nicer colors
 
 const questions = []; //holds addresses of questions in json file
 const answers = []; //hold values of answers (a String equal to one of the options) for each question
+let region = "AL"; //holds region for birds, default is all
 
 function makeQuiz() {
     if (getCookie("q1") == "") { //if cookie has not been set
+        setRegion("AL"); //set region to all birds (default)
         for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
             let num = Math.floor(Math.random() * 71);
             if (i == 0) {
@@ -33,7 +34,6 @@ function makeQuiz() {
             questions[i] = getCookie("q" + (i + 1));
         }
     }
-
     for (let i = 0; i < 10; i++) {
         fetch("https://owlish.hackclub.app/BirdQuiz/server/questions/" + questions[i] + ".json")
         .then((res) => {
@@ -142,4 +142,12 @@ function submitAnswers() {
     //ERROR: this happens before score has been tallied, because xhlhttp is asynchronous. need to fix that somehow
     
     //make play again? button appear (or only make new quiz button appear after submission)
+}
+function setRegion(id) { //receives id of region and updates region variable as well as html and styles
+    //should only run if answers are not submitted
+    region = id;
+    document.getElementById("AL").style.backgroundColor = ""; //clear styles
+    document.getElementById("NA").style.backgroundColor = "";
+    document.getElementById("EU").style.backgroundColor = "";
+    document.getElementById(id).style.backgroundColor = "darkgrey";
 }
