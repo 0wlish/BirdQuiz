@@ -1,5 +1,4 @@
 //TODO:
-//shuffle options for answers
 //make score more obvious (in header?)
 //prevent changing answer after submission
 //put answer right after image??
@@ -74,7 +73,7 @@ function makeQuiz() {
             }
         }
     }
-    else {
+    else { //if cookie has been set
         for (let i = 0; i < 10; i++) {
             questions[i] = getCookie("q" + (i + 1));
             setQuiz(i);
@@ -93,10 +92,11 @@ function makeQuiz() {
             document.getElementById("l" + (i + 1)).innerHTML = data.location;
             //console.log("loc: " + data.location);
             //console.log("index: " + questions[i]);
-            document.getElementById((i + 1) + "o1").innerHTML = data.o1;
-            document.getElementById((i + 1) + "o2").innerHTML = data.o2;
-            document.getElementById((i + 1) + "o3").innerHTML = data.o3;
-            document.getElementById((i + 1) + "o4").innerHTML = data.o4;})
+            const options = shuffleOptions(data.o1, data.o2, data.o3, data.o4);
+            document.getElementById((i + 1) + "o1").innerHTML = options[0];
+            document.getElementById((i + 1) + "o2").innerHTML = options[1];
+            document.getElementById((i + 1) + "o3").innerHTML = options[2];
+            document.getElementById((i + 1) + "o4").innerHTML = options[3];})
         .catch((error) => console.error("Unable to fetch data:", error));
     }
 }
@@ -210,4 +210,15 @@ function openModal(id) {
 }
 function closeModal() {
     document.getElementById("modal").style.display = "none";
+}
+function shuffleOptions(o1, o2, o3, o4) {
+    //recieves four options as strings and returns an array of those shuffled options
+    const options = [o1, o2, o3, o4];
+    for (let i = 0; i < 100; i++) { //shuffle 1000 times
+        let index = Math.floor(Math.random() * 4); //generate random num 0..3
+        let o = options[0];
+        options[0] = options[index];
+        options[index] = o;
+    }
+    return options;
 }
