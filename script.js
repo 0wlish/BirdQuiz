@@ -191,6 +191,7 @@ function submitAnswers() {
 }
 function setRegion(id) { //receives id of region and updates region variable as well as html and styles
     //should only run if answers are not submitted
+    //ISSUE: clears cookies every time page is reloaded -- bad
     region = id;
     document.getElementById("al").style.backgroundColor = ""; //clear styles
     document.getElementById("na").style.backgroundColor = "";
