@@ -3,6 +3,10 @@ img {
     display: block;
     margin: auto auto 30px auto;
     border-radius: 25px;
+    transition: 0.2s;
+}
+.questions > img:hover {
+    opacity: 0.8;
 }
 .questions {
     margin: 0px auto 20px;
