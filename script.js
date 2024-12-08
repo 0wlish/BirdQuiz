@@ -10,9 +10,9 @@ const questions = []; //holds addresses of questions in json file
 const answers = []; //hold values of answers (a String equal to one of the options) for each question
 let region = "AL"; //holds region for birds, default is all
 
-const NUM_EU = 24; //number of questions in each region
-const NUM_NA = 47;
-const NUM_AL = 71; //number of questions overall
+const NUM_EU = 30; //number of questions in each region
+const NUM_NA = 50;
+const NUM_AL = 80; //number of questions overall
 
 setRegion("al"); //set region to all birds (default)
 
