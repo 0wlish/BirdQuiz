@@ -1,9 +1,9 @@
 //TODO:
-//make score more obvious (in header?)
-//prevent changing answer after submission
 //put answer right after image??
 //highlight answer in green?
 //nicer colors
+//jump to top when answers are submitted -- display score at the top
+//make list of questions from previous test, and make sure that user doesn't get those questions in the next test (extra feature - not important)
 
 const questions = []; //holds addresses of questions in json file
 const answers = []; //hold values of answers (a String equal to one of the options) for each question
@@ -13,19 +13,22 @@ const NUM_EU = 30; //number of questions in each region
 const NUM_NA = 50;
 const NUM_AL = 80; //number of questions overall
 
+let isSubmitted = false; //tracks if answers have been submitted
+
 setRegion("al"); //set region to all birds (default)
 
 function makeQuiz() {
     if (getCookie("q1") == "") { //if cookie has not been set
         resetQuestionArray();
         if (region != "al") { //if data needs to be fetched from server
-            fetch("https://owlish.hackclub.app/BirdQuiz/server/" + region + ".json")
+            fetch("https://owlish.hackclub.app/BirdQuiz/server/" + region + ".json", {mode: "cors"})
             .then((res) => {
                 if (!res.ok) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
                 return res.json();})
             .then((data) => {
+                console.log(data);
                 for (let i = 0; i < 10; i++) { //populate questions with numbers 0..70, then generate list of images
                     let num = 0;
                     if (region == "na") {
@@ -81,7 +84,7 @@ function makeQuiz() {
     }
 
     function setQuiz(i) {
-        fetch("https://owlish.hackclub.app/BirdQuiz/server/questions/" + questions[i] + ".json")
+        fetch("https://owlish.hackclub.app/BirdQuiz/server/questions/" + questions[i] + ".json", {mode: "cors"})
         .then((res) => {
             if (!res.ok) {
                 throw new Error(`HTTP error! Status: ${res.status}`);
@@ -120,21 +123,24 @@ function deleteCookie(name) { //run when answers are submitted
     //console.log("after deletion: " + document.cookie);
 }
 function newQuiz() {
-    //console.log("generating new quiz");
+    isSubmitted = false;
     for (let i = 1; i <= 10; i++) {
         deleteCookie("q" + i);
         clearStyles(i);
+        answers[i-1] = -1; //clear answer array
     }
     clearAnswerNotes();
     makeQuiz();
 }
 function setAnswer(id) {
     //recieves id of currently selected answer
-    let index = parseInt(id.substring(0,2)) - 1;
-    let answer = document.getElementById(id).innerHTML;
-    clearStyles(index + 1);
-    document.getElementById(id).style.backgroundColor = "darkgrey";
-    answers[index] = answer
+    if (!isSubmitted) {
+        let index = parseInt(id.substring(0,2)) - 1;
+        let answer = document.getElementById(id).innerHTML;
+        clearStyles(index + 1);
+        document.getElementById(id).style.backgroundColor = "darkgrey";
+        answers[index] = answer;
+    }
 }
 function clearStyles (qNum) {
     document.getElementById(qNum + "o1").style.backgroundColor = "";
@@ -147,46 +153,53 @@ function clearAnswerNotes() { //clears all answer notes and results
         document.getElementById("res" + i).parentElement.style.display = "none"; //clear correct/incorrect
         document.getElementById("ans" + i).style.display = "none"; //clear answerbox
     }
-    document.getElementById("score-container").style.display = "none";
+    //document.getElementById("score-container").style.display = "none"; //debugging scorebox
 }
 function submitAnswers() {
     //checks if answers are correct
-    let score = 0;
+    if (answers.indexOf(-1) != -1) {
+        alert("You haven't answered all the questions!");
+    }
+    else {
+        isSubmitted = true;
+        let score = 0;
 
-    for (let index in answers) {
-        //somehow disable choosing a new answer
+        for (let index in answers) {
+            //somehow disable choosing a new answer
 
-        fetch("https://owlish.hackclub.app/BirdQuiz/server/answers/" + questions[index] + ".json")
-        .then((res) => {
-            if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-            return res.json();})
-        .then((data) => {
-            document.getElementById("ans" + (parseInt(index) + 1)).style.display = "block";
-            document.getElementById("a" + (parseInt(index) + 1)).innerHTML = data.answer;
-            document.getElementById("r" + (parseInt(index) + 1)).style.display = "block";
-            document.getElementById("n" + (parseInt(index) + 1)).innerHTML = data.notes;
-            document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.display = "block";
-            console.log(answers[index]);
-            console.log(data.answer);
-            if (answers[index] ==  data.answer) { //if answer is correct
-                document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "correct!";
-                document.getElementById("res" + (parseInt(index) + 1)).style.color = "green";
-                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightgreen";
-                score++;
-                console.log(score);
-            }
-            else { //if answer is not correct
-                document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "incorrect :(";
-                document.getElementById("res" + (parseInt(index) + 1)).style.color = "red";
-                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightpink";
-            }
-            document.getElementById("score-container").style.display = "block";
-            document.getElementById("score").innerHTML = score + "/10";
-        })
-        .catch((error) => console.error("Unable to fetch data:", error));
-    }    
+            fetch("https://owlish.hackclub.app/BirdQuiz/server/answers/" + questions[index] + ".json", {mode: "cors"})
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                return res.json();})
+            .then((data) => {
+                document.getElementById("ans" + (parseInt(index) + 1)).style.display = "block";
+                document.getElementById("a" + (parseInt(index) + 1)).innerHTML = data.answer;
+                document.getElementById("r" + (parseInt(index) + 1)).style.display = "block";
+                document.getElementById("n" + (parseInt(index) + 1)).innerHTML = data.notes;
+                document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.display = "block";
+                console.log(answers[index]);
+                console.log(data.answer);
+                if (answers[index] ==  data.answer) { //if answer is correct
+                    document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "correct!";
+                    document.getElementById("res" + (parseInt(index) + 1)).style.color = "green";
+                    document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightgreen";
+                    score++;
+                    console.log(score);
+                }
+                else { //if answer is not correct
+                    document.getElementById("res" + (parseInt(index) + 1)).innerHTML = "incorrect :(";
+                    document.getElementById("res" + (parseInt(index) + 1)).style.color = "red";
+                    document.getElementById("res" + (parseInt(index) + 1)).parentElement.style.backgroundColor = "lightpink";
+                }
+                document.getElementById("score-container").style.display = "block";
+                document.getElementById("score").innerHTML = score + "/10";
+            })
+            .catch((error) => console.error("Unable to fetch data:", error));
+        }
+        window.location.href="#top";
+    }  
     //make play again? button appear (or only make new quiz button appear after submission)
 }
 function setRegion(id) { //receives id of region and updates region variable as well as html and styles

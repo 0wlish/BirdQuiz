@@ -5,8 +5,14 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body onload="makeQuiz()">
-        <h1>How well do you know birds?</h1>
-        <p>you're here a bit early...come back later to actually play the quiz!</p>
+        <h1 id="top">How well do you know birds?</h1>
+
+        <div id="score-container">
+            <div id="scorebox">
+                <h3>your score:</h3>
+                <h3 id="score"></h3>
+            </div>
+        </div>
 
         <div id="question-container">
             <div id="buttonbox2">
@@ -20,6 +26,14 @@
                     <h2 id="res1"></h2>
                 </div>
                 <img src="" id="i1" onclick="openModal(this.id)">
+                <div class="answers" id="ans1">
+                    <h3>Answer:</h3>
+                    <p id="a1"></p>
+                    <div id="r1" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n1"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l1"></p>
                 <h3>This bird is a...</h3>
@@ -29,14 +43,6 @@
                     <li id="1o3" onclick="setAnswer(this.id)"></li>
                     <li id="1o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans1">
-                    <h3>Answer:</h3>
-                    <p id="a1"></p>
-                    <div id="r1" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n1"></p>
-                    </div>
-                </div>
             </div>
             <div id="q2" class="questions">
                 <h2>#2</h2>
@@ -44,6 +50,14 @@
                     <h2 id="res2"></h2>
                 </div>
                 <img src="" id="i2" onclick="openModal(this.id)">
+                <div class="answers" id="ans2">
+                    <h3>Answer:</h3>
+                    <p id="a2"></p>
+                    <div id="r2" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n2"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l2"></p>
                 <h3>This bird is a...</h3>
@@ -53,14 +67,6 @@
                     <li id="2o3" onclick="setAnswer(this.id)"></li>
                     <li id="2o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans2">
-                    <h3>Answer:</h3>
-                    <p id="a2"></p>
-                    <div id="r2" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n2"></p>
-                    </div>
-                </div>
             </div>
             <div id="q3" class="questions">
                 <h2>#3</h2>
@@ -68,6 +74,14 @@
                     <h2 id="res3"></h2>
                 </div>
                 <img src="" id="i3" onclick="openModal(this.id)">
+                <div class="answers" id="ans3">
+                    <h3>Answer:</h3>
+                    <p id="a3"></p>
+                    <div id="r3" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n3"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l3"></p>
                 <h3>This bird is a...</h3>
@@ -77,14 +91,6 @@
                     <li id="3o3" onclick="setAnswer(this.id)"></li>
                     <li id="3o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans3">
-                    <h3>Answer:</h3>
-                    <p id="a3"></p>
-                    <div id="r3" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n3"></p>
-                    </div>
-                </div>
             </div>
             <div id="q4" class="questions">
                 <h2>#4</h2>
@@ -92,6 +98,14 @@
                     <h2 id="res4"></h2>
                 </div>
                 <img src="" id="i4" onclick="openModal(this.id)">
+                <div class="answers" id="ans4">
+                    <h3>Answer:</h3>
+                    <p id="a4"></p>
+                    <div id="r4" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n4"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l4"></p>
                 <h3>This bird is a...</h3>
@@ -101,14 +115,6 @@
                     <li id="4o3" onclick="setAnswer(this.id)"></li>
                     <li id="4o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans4">
-                    <h3>Answer:</h3>
-                    <p id="a4"></p>
-                    <div id="r4" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n4"></p>
-                    </div>
-                </div>
             </div>
             <div id="q5" class="questions">
                 <h2>#5</h2>
@@ -116,6 +122,14 @@
                     <h2 id="res5"></h2>
                 </div>
                 <img src="" id="i5" onclick="openModal(this.id)">
+                <div class="answers" id="ans5">
+                    <h3>Answer:</h3>
+                    <p id="a5"></p>
+                    <div id="r5" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n5"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l5"></p>
                 <h3>This bird is a...</h3>
@@ -125,14 +139,6 @@
                     <li id="5o3" onclick="setAnswer(this.id)"></li>
                     <li id="5o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans5">
-                    <h3>Answer:</h3>
-                    <p id="a5"></p>
-                    <div id="r5" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n5"></p>
-                    </div>
-                </div>
             </div>
             <div id="q6" class="questions">
                 <h2>#6</h2>
@@ -140,6 +146,14 @@
                     <h2 id="res6"></h2>
                 </div>
                 <img src="" id="i6" onclick="openModal(this.id)">
+                <div class="answers" id="ans6">
+                    <h3>Answer:</h3>
+                    <p id="a6"></p>
+                    <div id="r6" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n6"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l6"></p>
                 <h3>This bird is a...</h3>
@@ -149,14 +163,6 @@
                     <li id="6o3" onclick="setAnswer(this.id)"></li>
                     <li id="6o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans6">
-                    <h3>Answer:</h3>
-                    <p id="a6"></p>
-                    <div id="r6" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n6"></p>
-                    </div>
-                </div>
             </div>
             <div id="q7" class="questions">
                 <h2>#7</h2>
@@ -164,6 +170,14 @@
                     <h2 id="res7"></h2>
                 </div>
                 <img src="" id="i7" onclick="openModal(this.id)">
+                <div class="answers" id="ans7">
+                    <h3>Answer:</h3>
+                    <p id="a7"></p>
+                    <div id="r7" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n7"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l7"></p>
                 <h3>This bird is a...</h3>
@@ -173,14 +187,6 @@
                     <li id="7o3" onclick="setAnswer(this.id)"></li>
                     <li id="7o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans7">
-                    <h3>Answer:</h3>
-                    <p id="a7"></p>
-                    <div id="r7" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n7"></p>
-                    </div>
-                </div>
             </div>
             <div id="q8" class="questions">
                 <h2>#8</h2>
@@ -188,6 +194,14 @@
                     <h2 id="res8"></h2>
                 </div>
                 <img src="" id="i8" onclick="openModal(this.id)">
+                <div class="answers" id="ans8">
+                    <h3>Answer:</h3>
+                    <p id="a8"></p>
+                    <div id="r8" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n8"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l8"></p>
                 <h3>This bird is a...</h3>
@@ -197,14 +211,6 @@
                     <li id="8o3" onclick="setAnswer(this.id)"></li>
                     <li id="8o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans8">
-                    <h3>Answer:</h3>
-                    <p id="a8"></p>
-                    <div id="r8" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n8"></p>
-                    </div>
-                </div>
             </div>
             <div id="q9" class="questions">
                 <h2>#9</h2>
@@ -212,6 +218,14 @@
                     <h2 id="res9"></h2>
                 </div>
                 <img src="" id="i9" onclick="openModal(this.id)">
+                <div class="answers" id="ans9">
+                    <h3>Answer:</h3>
+                    <p id="a9"></p>
+                    <div id="r9" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n9"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l9"></p>
                 <h3>This bird is a...</h3>
@@ -221,14 +235,6 @@
                     <li id="9o3" onclick="setAnswer(this.id)"></li>
                     <li id="9o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans9">
-                    <h3>Answer:</h3>
-                    <p id="a9"></p>
-                    <div id="r9" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n9"></p>
-                    </div>
-                </div>
             </div>
             <div id="q10" class="questions">
                 <h2>#10</h2>
@@ -236,6 +242,14 @@
                     <h2 id="res10"></h2>
                 </div>
                 <img src="" id="i10" onclick="openModal(this.id)">
+                <div class="answers" id="ans10">
+                    <h3>Answer:</h3>
+                    <p id="a10"></p>
+                    <div id="r10" class="notes">
+                        <h3>Notes:</h3>
+                        <p id="n10"></p>
+                    </div>
+                </div>
                 <h3>Location:</h3>
                 <p id="l10"></p>
                 <h3>This bird is a...</h3>
@@ -245,24 +259,10 @@
                     <li id="10o3" onclick="setAnswer(this.id)"></li>
                     <li id="10o4" onclick="setAnswer(this.id)"></li>
                 </ul>
-                <div class="answers" id="ans10">
-                    <h3>Answer:</h3>
-                    <p id="a10"></p>
-                    <div id="r10" class="notes">
-                        <h3>Notes:</h3>
-                        <p id="n10"></p>
-                    </div>
-                </div>
             </div>
             <div id="buttonbox">
                 <h2 id="submit" onclick="submitAnswers()">submit answers</h2>
                 <h2 id="newquiz" onclick="newQuiz()">new quiz</h2>
-            </div>
-        </div>
-        <div id="score-container">
-            <div id="scorebox">
-                <h2>your score:</h2>
-                <h3 id="score"></h3>
             </div>
         </div>
         <div id="modal">
