@@ -34,6 +34,9 @@ li {
     padding: 5px;
     border-radius: 10px;
 }
+ul {
+    margin: 0px;
+}
 #submit, #newquiz, #al, #na, #eu {
     width: fit-content;
     padding: 10px;
@@ -58,8 +61,9 @@ li {
 .answers {
     display: none;
     background-color: lightgrey;
-    padding: 20px;
+    padding: 20px 20px 4px 20px;
     border-radius: 25px;
+    margin-bottom: 20px
 }
 .notes {
     display: none;

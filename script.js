@@ -1,8 +1,6 @@
 //TODO:
-//put answer right after image??
 //highlight answer in green?
 //nicer colors
-//jump to top when answers are submitted -- display score at the top
 //make list of questions from previous test, and make sure that user doesn't get those questions in the next test (extra feature - not important)
 
 const questions = []; //holds addresses of questions in json file
