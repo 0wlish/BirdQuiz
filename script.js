@@ -3,8 +3,8 @@
 //nicer colors
 //make list of questions from previous test, and make sure that user doesn't get those questions in the next test (extra feature - not important)
 
-const questions = []; //holds addresses of questions in json file
-const answers = []; //hold values of answers (a String equal to one of the options) for each question
+const questions = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; //holds addresses of questions in json file
+const answers = [ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; //hold values of answers (a String equal to one of the options) for each question
 let region = "AL"; //holds region for birds, default is all
 
 const NUM_EU = 30; //number of questions in each region
@@ -18,6 +18,7 @@ setRegion("al"); //set region to all birds (default)
 function makeQuiz() {
     if (getCookie("q1") == "") { //if cookie has not been set
         resetQuestionArray();
+        resetAnswerArray();
         if (region != "al") { //if data needs to be fetched from server
             fetch("https://owlish.hackclub.app/BirdQuiz/server/" + region + ".json", {mode: "cors"})
             .then((res) => {
@@ -121,6 +122,8 @@ function deleteCookie(name) { //run when answers are submitted
     //console.log("after deletion: " + document.cookie);
 }
 function newQuiz() {
+    document.getElementById("newquiz").style.display = "none";
+    document.getElementById("submit").style.display = "block";
     isSubmitted = false;
     for (let i = 1; i <= 10; i++) {
         deleteCookie("q" + i);
@@ -151,7 +154,7 @@ function clearAnswerNotes() { //clears all answer notes and results
         document.getElementById("res" + i).parentElement.style.display = "none"; //clear correct/incorrect
         document.getElementById("ans" + i).style.display = "none"; //clear answerbox
     }
-    //document.getElementById("score-container").style.display = "none"; //debugging scorebox
+    document.getElementById("score-container").style.display = "none";
 }
 function submitAnswers() {
     //checks if answers are correct
@@ -163,8 +166,6 @@ function submitAnswers() {
         let score = 0;
 
         for (let index in answers) {
-            //somehow disable choosing a new answer
-
             fetch("https://owlish.hackclub.app/BirdQuiz/server/answers/" + questions[index] + ".json", {mode: "cors"})
             .then((res) => {
                 if (!res.ok) {
@@ -197,6 +198,8 @@ function submitAnswers() {
             .catch((error) => console.error("Unable to fetch data:", error));
         }
         window.location.href="#top";
+        document.getElementById("newquiz").style.display = "block";
+        document.getElementById("submit").style.display = "none";
     }  
     //make play again? button appear (or only make new quiz button appear after submission)
 }
@@ -213,6 +216,11 @@ function setRegion(id) { //receives id of region and updates region variable as 
 function resetQuestionArray() {
     for (let q in questions) {
         questions[q] = -1;
+    }
+}
+function resetAnswerArray() {
+    for (let a in answers) {
+        answers[a] = -1;
     }
 }
 function openModal(id) {
