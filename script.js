@@ -139,7 +139,7 @@ function setAnswer(id) {
         let index = parseInt(id.substring(0,2)) - 1;
         let answer = document.getElementById(id).innerHTML;
         clearStyles(index + 1);
-        document.getElementById(id).style.backgroundColor = "darkgrey";
+        document.getElementById(id).style.backgroundColor = "#ECCE83";
         answers[index] = answer;
     }
 }
@@ -210,7 +210,7 @@ function setRegion(id) { //receives id of region and updates region variable as 
     document.getElementById("al").style.backgroundColor = ""; //clear styles
     document.getElementById("na").style.backgroundColor = "";
     document.getElementById("eu").style.backgroundColor = "";
-    document.getElementById(id).style.backgroundColor = "darkgrey";
+    document.getElementById(id).style.backgroundColor = "#ECCE83";
     newQuiz();
 }
 function resetQuestionArray() {
