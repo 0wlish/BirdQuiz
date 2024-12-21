@@ -1,6 +1,4 @@
 //TODO:
-//highlight answer in green?
-//nicer colors
 //make list of questions from previous test, and make sure that user doesn't get those questions in the next test (extra feature - not important)
 
 const questions = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; //holds addresses of questions in json file
@@ -139,7 +137,7 @@ function setAnswer(id) {
         let index = parseInt(id.substring(0,2)) - 1;
         let answer = document.getElementById(id).innerHTML;
         clearStyles(index + 1);
-        document.getElementById(id).style.backgroundColor = "#ECCE83";
+        document.getElementById(id).style.backgroundColor = "#dacffc";
         answers[index] = answer;
     }
 }
@@ -210,7 +208,7 @@ function setRegion(id) { //receives id of region and updates region variable as 
     document.getElementById("al").style.backgroundColor = ""; //clear styles
     document.getElementById("na").style.backgroundColor = "";
     document.getElementById("eu").style.backgroundColor = "";
-    document.getElementById(id).style.backgroundColor = "#ECCE83";
+    document.getElementById(id).style.backgroundColor = "#dacffc";
     newQuiz();
 }
 function resetQuestionArray() {

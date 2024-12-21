@@ -1,5 +1,5 @@
 body {
-    color: #332E3C;
+    color: #0a080d;
 }
 img {
     width: 70%;
@@ -11,8 +11,8 @@ img {
 .questions > img:hover {
     opacity: 0.8;
 }
-h1 {
-    margin: auto;
+#top {
+    margin: 40px auto;
     text-align: center;
 }
 .questions {
@@ -35,12 +35,13 @@ h1 {
     width: 70%;
 }
 li:hover, #submit:hover, #newquiz:hover, #al:hover, #na:hover, #eu:hover {
-    background-color: #fcfff0;
+    background-color: #c8d794;
 }
 li {
     width: 30%;
     padding: 5px;
     border-radius: 10px;
+    transition: 0.2s;
 }
 ul {
     margin: 0px;
@@ -52,6 +53,7 @@ ul {
     background-color: #EEFCCE;
     margin-right: 20px;
     margin-bottom: 20px;
+    transition: 0.2s;
 }
 #buttonbox, #buttonbox2 {
     display: flex;
