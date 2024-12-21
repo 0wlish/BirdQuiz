@@ -1,5 +1,5 @@
 //TODO:
-//make list of questions from previous test, and make sure that user doesn't get those questions in the next test (extra feature - not important)
+//bird sidebar drawing (silhouttes of birds of all types flying)
 
 const questions = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; //holds addresses of questions in json file
 const answers = [ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; //hold values of answers (a String equal to one of the options) for each question
